@@ -11,25 +11,24 @@ var inputType = {
    * @name ng.directive:input.text
    *
    * @description
-   * Standard HTML text input with angular data binding.
+   * Стандартное HTML поле ввода текста с поддержкой связывания данных.
    *
-   * @param {string} ngModel Assignable angular expression to data-bind to.
-   * @param {string=} name Property name of the form under which the control is published.
-   * @param {string=} required Adds `required` validation error key if the value is not entered.
-   * @param {string=} ngRequired Adds `required` attribute and `required` validation constraint to
-   *    the element when the ngRequired expression evaluates to true. Use `ngRequired` instead of
-   *    `required` when you want to data-bind to the `required` attribute.
-   * @param {number=} ngMinlength Sets `minlength` validation error key if the value is shorter than
-   *    minlength.
-   * @param {number=} ngMaxlength Sets `maxlength` validation error key if the value is longer than
-   *    maxlength.
-   * @param {string=} ngPattern Sets `pattern` validation error key if the value does not match the
-   *    RegExp pattern expression. Expected value is `/regexp/` for inline patterns or `regexp` for
-   *    patterns defined as scope expressions.
-   * @param {string=} ngChange Angular expression to be executed when input changes due to user
-   *    interaction with the input element.
-   * @param {boolean=} [ngTrim=true] If set to false Angular will not automatically trimming the
-   *    input.
+   * @param {string} ngModel Ассоциированное angular-выражение для связывания данных.
+   * @param {string=} name Имя свойства, под которым элемент управления будет доступен в области видимости.
+   * @param {string=} required Устанавливает ключ ошибки `required` если поле пусто.
+   * @param {string=} ngRequired Устанавливает атрибут `required`, если выражение возвращает true.
+   *    Используйте `ngRequired` вместо `required` если необходимо связать данные с атрибутом `required`.
+   * @param {number=} ngMinlength Устанавливает ключ ошибки `minlength` если значение короче, чем заданное количество 
+   *    знаков.
+   * @param {number=} ngMaxlength Устанавливает ключ ошибки `maxlength` если значение длиннее, чем заданное количество 
+   *    знаков.
+   * @param {string=} ngPattern Устанавливает ключ ошибки `pattern` если значение не соответствует RegExp-шаблону. 
+   *    Значение сравнивается с переданным шаблоном, если он передается в формате `/regexp/`, в других случаях 
+   *    считается, что передано свойство текущей области видимости, которое содержит нужный шаблон.
+   * @param {string=} ngChange angular-выражение, которое будет выполнено, когда изменится содержимое элемента 
+   *    управления в результате взаимодействия с пользователем.
+   * @param {boolean=} [ngTrim=true] Если установлено false Angular не будет автоматически удалять концевые пробелы
+   *    из введенных данных
    *
    * @example
       <doc:example>
@@ -88,26 +87,25 @@ var inputType = {
    * @name ng.directive:input.number
    *
    * @description
-   * Text input with number validation and transformation. Sets the `number` validation
-   * error if not a valid number.
+   * Текстовое поле для ввода чисел с проверкой и преобразованием. Устанавливает ключ ошибки `number` если введенное 
+   * значение не является числом.
    *
-   * @param {string} ngModel Assignable angular expression to data-bind to.
-   * @param {string=} name Property name of the form under which the control is published.
-   * @param {string=} min Sets the `min` validation error key if the value entered is less than `min`.
-   * @param {string=} max Sets the `max` validation error key if the value entered is greater than `max`.
-   * @param {string=} required Sets `required` validation error key if the value is not entered.
-   * @param {string=} ngRequired Adds `required` attribute and `required` validation constraint to
-   *    the element when the ngRequired expression evaluates to true. Use `ngRequired` instead of
-   *    `required` when you want to data-bind to the `required` attribute.
-   * @param {number=} ngMinlength Sets `minlength` validation error key if the value is shorter than
-   *    minlength.
-   * @param {number=} ngMaxlength Sets `maxlength` validation error key if the value is longer than
-   *    maxlength.
-   * @param {string=} ngPattern Sets `pattern` validation error key if the value does not match the
-   *    RegExp pattern expression. Expected value is `/regexp/` for inline patterns or `regexp` for
-   *    patterns defined as scope expressions.
-   * @param {string=} ngChange Angular expression to be executed when input changes due to user
-   *    interaction with the input element.
+   * @param {string} ngModel Ассоциированное angular-выражение для связывания данных.
+   * @param {string=} name Имя свойства, под которым элемент управления будет доступен в области видимости.
+   * @param {string=} min Устанавливает ключ ошибки `min` если введенное значение меньше `min`.
+   * @param {string=} max Устанавливает ключ ошибки `max` если введенное значение больше `max`.
+   * @param {string=} required Устанавливает ключ ошибки `required` если поле пусто.
+   * @param {string=} ngRequired Устанавливает атрибут `required`, если выражение возвращает true.
+   *    Используйте `ngRequired` вместо `required` если необходимо связать данные с атрибутом `required`.
+   * @param {number=} ngMinlength Устанавливает ключ ошибки `minlength` если значение короче, чем заданное количество 
+   *    знаков.
+   * @param {number=} ngMaxlength Устанавливает ключ ошибки `maxlength` если значение длиннее, чем заданное количество 
+   *    знаков.
+   * @param {string=} ngPattern Устанавливает ключ ошибки `pattern` если значение не соответствует RegExp-шаблону. 
+   *    Значение сравнивается с переданным шаблоном, если он передается в формате `/regexp/`, в других случаях 
+   *    считается, что передано свойство текущей области видимости, которое содержит нужный шаблон.
+   * @param {string=} ngChange angular-выражение, которое будет выполнено, когда изменится содержимое элемента 
+   *    управления в результате взаимодействия с пользователем.
    *
    * @example
       <doc:example>
@@ -159,24 +157,23 @@ var inputType = {
    * @name ng.directive:input.url
    *
    * @description
-   * Text input with URL validation. Sets the `url` validation error key if the content is not a
-   * valid URL.
+   * Поле ввода URL-адреса с проверкой его корректности. Устанавливает ключ ошибки `url` если введенные данные 
+   * не являются правильным URL.
    *
-   * @param {string} ngModel Assignable angular expression to data-bind to.
-   * @param {string=} name Property name of the form under which the control is published.
-   * @param {string=} required Sets `required` validation error key if the value is not entered.
-   * @param {string=} ngRequired Adds `required` attribute and `required` validation constraint to
-   *    the element when the ngRequired expression evaluates to true. Use `ngRequired` instead of
-   *    `required` when you want to data-bind to the `required` attribute.
-   * @param {number=} ngMinlength Sets `minlength` validation error key if the value is shorter than
-   *    minlength.
-   * @param {number=} ngMaxlength Sets `maxlength` validation error key if the value is longer than
-   *    maxlength.
-   * @param {string=} ngPattern Sets `pattern` validation error key if the value does not match the
-   *    RegExp pattern expression. Expected value is `/regexp/` for inline patterns or `regexp` for
-   *    patterns defined as scope expressions.
-   * @param {string=} ngChange Angular expression to be executed when input changes due to user
-   *    interaction with the input element.
+   * @param {string} ngModel Ассоциированное angular-выражение для связывания данных.
+   * @param {string=} name Имя свойства, под которым элемент управления будет доступен в области видимости.
+   * @param {string=} required Устанавливает ключ ошибки `required` если поле пусто.
+   * @param {string=} ngRequired Устанавливает атрибут `required`, если выражение возвращает true.
+   *    Используйте `ngRequired` вместо `required` если необходимо связать данные с атрибутом `required`.
+   * @param {number=} ngMinlength Устанавливает ключ ошибки `minlength` если значение короче, чем заданное количество 
+   *    знаков.
+   * @param {number=} ngMaxlength Устанавливает ключ ошибки `maxlength` если значение длиннее, чем заданное количество 
+   *    знаков.
+   * @param {string=} ngPattern Устанавливает ключ ошибки `pattern` если значение не соответствует RegExp-шаблону. 
+   *    Значение сравнивается с переданным шаблоном, если он передается в формате `/regexp/`, в других случаях 
+   *    считается, что передано свойство текущей области видимости, которое содержит нужный шаблон.
+   * @param {string=} ngChange angular-выражение, которое будет выполнено, когда изменится содержимое элемента 
+   *    управления в результате взаимодействия с пользователем.
    *
    * @example
       <doc:example>
@@ -227,22 +224,21 @@ var inputType = {
    * @name ng.directive:input.email
    *
    * @description
-   * Text input with email validation. Sets the `email` validation error key if not a valid email
-   * address.
+   * Поле ввода адреса электронной почты с проверкой его корректности. Устанавливает ключ ошибки `email` если значение 
+   * ввода не является правильным адресом электронной почты.
    *
-   * @param {string} ngModel Assignable angular expression to data-bind to.
-   * @param {string=} name Property name of the form under which the control is published.
-   * @param {string=} required Sets `required` validation error key if the value is not entered.
-   * @param {string=} ngRequired Adds `required` attribute and `required` validation constraint to
-   *    the element when the ngRequired expression evaluates to true. Use `ngRequired` instead of
-   *    `required` when you want to data-bind to the `required` attribute.
-   * @param {number=} ngMinlength Sets `minlength` validation error key if the value is shorter than
-   *    minlength.
-   * @param {number=} ngMaxlength Sets `maxlength` validation error key if the value is longer than
-   *    maxlength.
-   * @param {string=} ngPattern Sets `pattern` validation error key if the value does not match the
-   *    RegExp pattern expression. Expected value is `/regexp/` for inline patterns or `regexp` for
-   *    patterns defined as scope expressions.
+   * @param {string} ngModel Ассоциированное angular-выражение для связывания данных.
+   * @param {string=} name Имя свойства, под которым элемент управления будет доступен в области видимости.
+   * @param {string=} required Устанавливает ключ ошибки `required` если поле пусто.
+   * @param {string=} ngRequired Устанавливает атрибут `required`, если выражение возвращает true.
+   *    Используйте `ngRequired` вместо `required` если необходимо связать данные с атрибутом `required`.
+   * @param {number=} ngMinlength Устанавливает ключ ошибки `minlength` если значение короче, чем заданное количество 
+   *    знаков.
+   * @param {number=} ngMaxlength Устанавливает ключ ошибки `maxlength` если значение длиннее, чем заданное количество 
+   *    знаков.
+   * @param {string=} ngPattern Устанавливает ключ ошибки `pattern` если значение не соответствует RegExp-шаблону. 
+   *    Значение сравнивается с переданным шаблоном, если он передается в формате `/regexp/`, в других случаях 
+   *    считается, что передано свойство текущей области видимости, которое содержит нужный шаблон.
    *
    * @example
       <doc:example>
@@ -293,13 +289,13 @@ var inputType = {
    * @name ng.directive:input.radio
    *
    * @description
-   * HTML radio button.
+   * HTML радио-кнопки.
    *
-   * @param {string} ngModel Assignable angular expression to data-bind to.
-   * @param {string} value The value to which the expression should be set when selected.
-   * @param {string=} name Property name of the form under which the control is published.
-   * @param {string=} ngChange Angular expression to be executed when input changes due to user
-   *    interaction with the input element.
+   * @param {string} ngModel Ассоциированное angular-выражение для связывания данных.
+   * @param {string} value Значение, которое получит связанная модель, после выбора текущей радио-кнопки.
+   * @param {string=} name Имя свойства, под которым элемент управления будет доступен в области видимости.
+   * @param {string=} ngChange angular-выражение, которое будет выполнено, когда изменится содержимое элемента 
+   *    управления в результате взаимодействия с пользователем.
    *
    * @example
       <doc:example>
@@ -334,14 +330,14 @@ var inputType = {
    * @name ng.directive:input.checkbox
    *
    * @description
-   * HTML checkbox.
+   * HTML чекбокс.
    *
-   * @param {string} ngModel Assignable angular expression to data-bind to.
-   * @param {string=} name Property name of the form under which the control is published.
-   * @param {string=} ngTrueValue The value to which the expression should be set when selected.
-   * @param {string=} ngFalseValue The value to which the expression should be set when not selected.
-   * @param {string=} ngChange Angular expression to be executed when input changes due to user
-   *    interaction with the input element.
+   * @param {string} ngModel Ассоциированное angular-выражение для связывания данных.
+   * @param {string=} name Имя свойства, под которым элемент управления будет доступен в области видимости.
+   * @param {string=} ngTrueValue Значение, в которое установится связанное свойство, если флаг установлен.
+   * @param {string=} ngFalseValue Значение, в которое установится связанное свойство, если флаг сброшен.
+   * @param {string=} ngChange angular-выражение, которое будет выполнено, когда изменится содержимое элемента 
+   *    управления в результате взаимодействия с пользователем.
    *
    * @example
       <doc:example>
@@ -669,25 +665,23 @@ function checkboxInputType(scope, element, attr, ctrl) {
  * @restrict E
  *
  * @description
- * HTML textarea element control with angular data-binding. The data-binding and validation
- * properties of this element are exactly the same as those of the
- * {@link ng.directive:input input element}.
+ * HTML текстовое поле со связыванием данных. Связывание данных и проверка правильности ввода для этого элемента 
+ * такие же, как и для других {@link ng.directive:input input-элементов}.
  *
- * @param {string} ngModel Assignable angular expression to data-bind to.
- * @param {string=} name Property name of the form under which the control is published.
- * @param {string=} required Sets `required` validation error key if the value is not entered.
- * @param {string=} ngRequired Adds `required` attribute and `required` validation constraint to
- *    the element when the ngRequired expression evaluates to true. Use `ngRequired` instead of
- *    `required` when you want to data-bind to the `required` attribute.
- * @param {number=} ngMinlength Sets `minlength` validation error key if the value is shorter than
- *    minlength.
- * @param {number=} ngMaxlength Sets `maxlength` validation error key if the value is longer than
- *    maxlength.
- * @param {string=} ngPattern Sets `pattern` validation error key if the value does not match the
- *    RegExp pattern expression. Expected value is `/regexp/` for inline patterns or `regexp` for
- *    patterns defined as scope expressions.
- * @param {string=} ngChange Angular expression to be executed when input changes due to user
- *    interaction with the input element.
+ * @param {string} ngModel Ассоциированное angular-выражение для связывания данных.
+ * @param {string=} name Имя свойства, под которым элемент управления будет доступен в области видимости.
+ * @param {string=} required Устанавливает ключ ошибки `required` если поле пусто.
+ * @param {string=} ngRequired Устанавливает атрибут `required`, если выражение возвращает true.
+ *    Используйте `ngRequired` вместо `required` если необходимо связать данные с атрибутом `required`.
+ * @param {number=} ngMinlength Устанавливает ключ ошибки `minlength` если значение короче, чем заданное количество 
+ *    знаков.
+ * @param {number=} ngMaxlength Устанавливает ключ ошибки `maxlength` если значение длиннее, чем заданное количество 
+ *    знаков.
+ * @param {string=} ngPattern Устанавливает ключ ошибки `pattern` если значение не соответствует RegExp-шаблону. 
+ *    Значение сравнивается с переданным шаблоном, если он передается в формате `/regexp/`, в других случаях 
+ *    считается, что передано свойство текущей области видимости, которое содержит нужный шаблон.
+ * @param {string=} ngChange Angular-выражение, которое будет выполнено, когда изменится содержимое элемента 
+ *    управления в результате взаимодействия с пользователем.
  */
 
 
@@ -702,17 +696,18 @@ function checkboxInputType(scope, element, attr, ctrl) {
  *
  * @param {string} ngModel Ассоциированное angular-выражение для связывания данных.
  * @param {string=} name Имя свойства, под которым элемент управления будет доступен в области видимости.
- * @param {string=} required Устанавливает ключ `required` в ошибках проверки данных, когда поле не заполнено.
- * @param {boolean=} ngRequired Устанавливает атрибут `required`, если выражение возвращает true
- * @param {number=} ngMinlength Устанавливает ключ `minlength` в ошибках проверки данных если значение короче чем 
- *    заданное количество знаков.
- * @param {number=} ngMaxlength Устанавливает ключ `maxlength` в ошибках проверки данных, если значение длиннее чем
- *    заданное количество знаков.
- * @param {string=} ngPattern Устанавливает ключ `pattern` в ошибках проверки данных, если ввод не соответствует 
- *    шаблону RegExp. Значение сравнивается с переданным паттерном, если он передается в формате `/regexp/`, в 
- *    других случаях считается что передано свойство текущей области видимости, которое содержит нужный паттерн.
- * @param {string=} ngChange Angular-выражение, которое будет выполненовыполнено, когда измениться содержимое 
- *    элемента управления в результате взаимодействия с пользователем.
+ * @param {string=} required Устанавливает ключ ошибки `required` если поле пусто.
+ * @param {boolean=} ngRequired Устанавливает атрибут `required`, если выражение возвращает true.
+ *    Используйте `ngRequired` вместо `required` если необходимо связать данные с атрибутом `required`.
+ * @param {number=} ngMinlength Устанавливает ключ ошибки `minlength` если значение короче, чем заданное количество 
+ *    знаков.
+ * @param {number=} ngMaxlength Устанавливает ключ ошибки `maxlength` если значение длиннее, чем заданное количество 
+ *    знаков.
+ * @param {string=} ngPattern Устанавливает ключ ошибки `pattern` если значение не соответствует RegExp-шаблону. 
+ *    Значение сравнивается с переданным шаблоном, если он передается в формате `/regexp/`, в других случаях 
+ *    считается, что передано свойство текущей области видимости, которое содержит нужный шаблон.
+ * @param {string=} ngChange Angular-выражение, которое будет выполнено, когда изменится содержимое элемента 
+ *    управления в результате взаимодействия с пользователем.
  *
  * @example
     <doc:example>
@@ -808,32 +803,31 @@ var VALID_CLASS = 'ng-valid',
  * @ngdoc object
  * @name ng.directive:ngModel.NgModelController
  *
- * @property {string} $viewValue Actual string value in the view.
- * @property {*} $modelValue The value in the model, that the control is bound to.
- * @property {Array.<Function>} $parsers Whenever the control reads value from the DOM, it executes
- *     all of these functions to sanitize / convert the value as well as validate.
+ * @property {string} $viewValue Актуальное значение в представлении в виде строки.
+ * @property {*} $modelValue Значение модели, к которой привязан элемент управления.
+ * @property {Array.<Function>} $parsers Когда элемент управления читает значение из DOM, вызываются все 
+ *     функции для очистки/конвертации введенного значения и проверки его допустимости.
  *
- * @property {Array.<Function>} $formatters Whenever the model value changes, it executes all of
- *     these functions to convert the value as well as validate.
+ * @property {Array.<Function>} $formatters Когда модель меняет свое значение, выполняются все эти функции 
+ *     для конвертации значения в удобный для пользователя формат.
  *
- * @property {Object} $error An object hash with all errors as keys.
+ * @property {Object} $error Хэш объект, содержащий ключи ошибок и массив элементов с этими ошибками.
  *
- * @property {boolean} $pristine True if user has not interacted with the control yet.
- * @property {boolean} $dirty True if user has already interacted with the control.
- * @property {boolean} $valid True if there is no error.
- * @property {boolean} $invalid True if at least one error on the control.
+ * @property {boolean} $pristine True, если пользователь не взаимодействовал с элементом управления.
+ * @property {boolean} $dirty True, если пользователь уже взаимодействовал с элементом управления.
+ * @property {boolean} $valid True, если нет ошибок.
+ * @property {boolean} $invalid True, если есть хоть одна ошибка в элементе управления.
  *
  * @description
  *
- * `NgModelController` provides API for the `ng-model` directive. The controller contains
- * services for data-binding, validation, CSS update, value formatting and parsing. It
- * specifically does not contain any logic which deals with DOM rendering or listening to
- * DOM events. The `NgModelController` is meant to be extended by other directives where, the
- * directive provides DOM manipulation and the `NgModelController` provides the data-binding.
- *
- * This example shows how to use `NgModelController` with a custom control to achieve
- * data-binding. Notice how different directives (`contenteditable`, `ng-model`, and `required`)
- * collaborate together to achieve the desired result.
+ * `NgModelController` предоставляет API для директивы `ng-model`. Контроллер содержит сервисы для связывания 
+ * данных, их проверки, обновления CSS, форматирования значений и разбора ввода. Он не должен содержать логику 
+ * отображения DOM или слушания событий DOM. `NgModelController` предназначен для расширения другими директивами, 
+ * где директива манипулирует с DOM, а `NgModelController` осуществляет привязку данных.
+ * 
+ * Этот пример показывает как использовать `NgModelController` с пользовательским элементом управления для 
+ * добавления привязки данных. Обратите внимание, как различные директивы (`contenteditable`, `ng-model`, и 
+ * `required`) работают вместе для достижения желаемого результата.
  *
  * <example module="customControl">
     <file name="style.css">
@@ -926,8 +920,8 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
    * @methodOf ng.directive:ngModel.NgModelController
    *
    * @description
-   * Called when the view needs to be updated. It is expected that the user of the ng-model
-   * directive will implement this method.
+   * Вызывается когда нужно обновить представление. Предполагается что пользователь будет вызывать этот метод 
+   * для директивы ng-model.
    */
   this.$render = noop;
 
@@ -954,17 +948,17 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
    * @methodOf ng.directive:ngModel.NgModelController
    *
    * @description
-   * Change the validity state, and notifies the form when the control changes validity. (i.e. it
-   * does not notify form if given validator is already marked as invalid).
+   * Изменяет статус проверки данных и уведомляет форму, когда элемент управления изменяет свой статус проверки
+   * данных. (форма не уведомляется, если для элемента управления уже ранее был установлен статус invalid).
+   * 
+   * Этот метод должен вызываться валидаторами – т.е. функциями разбора или форматирования.
    *
-   * This method should be called by validators - i.e. the parser or formatter functions.
-   *
-   * @param {string} validationErrorKey Name of the validator. the `validationErrorKey` will assign
-   *        to `$error[validationErrorKey]=isValid` so that it is available for data-binding.
-   *        The `validationErrorKey` should be in camelCase and will get converted into dash-case
-   *        for class name. Example: `myError` will result in `ng-valid-my-error` and `ng-invalid-my-error`
-   *        class and can be bound to as  `{{someForm.someControl.$error.myError}}` .
-   * @param {boolean} isValid Whether the current state is valid (true) or invalid (false).
+   * @param {string} validationErrorKey Имя валидатора. `validationErrorKey` будет ассоциирован с 
+   *        `$error[validationErrorKey]=isValid`, и это можно использовать для привязки данных. 
+   *        `validationErrorKey` должен быть в верблюжьей нотации и будет преобразоваться в имя с разделителем 
+   *        тире, для имен классов CSS. Например: `myError` добавит классы `ng-valid-my-error` и 
+   *        `ng-invalid-my-error` и к нему можно привязываться, как `{{someForm.someControl.$error.myError}}`.
+   * @param {boolean} isValid true, если текущее состояние valid, или false – если invalid.
    */
   this.$setValidity = function(validationErrorKey, isValid) {
     if ($error[validationErrorKey] === !isValid) return;
@@ -995,10 +989,10 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
    * @methodOf ng.directive:ngModel.NgModelController
    *
    * @description
-   * Sets the control to its pristine state.
+   * Устанавливает элемент управления в первоначальное состояние.
    *
-   * This method can be called to remove the 'ng-dirty' class and set the control to its pristine
-   * state (ng-pristine class).
+   * Этот метод может быть вызван для удаления класса 'ng-dirty' и установки элемента управления в 
+   * свое первоначальное состояние (класс ng-pristine).
    */
   this.$setPristine = function () {
     this.$dirty = false;
@@ -1012,16 +1006,15 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
    * @methodOf ng.directive:ngModel.NgModelController
    *
    * @description
-   * Read a value from view.
+   * Читает значение из вида.
    *
-   * This method should be called from within a DOM event handler.
-   * For example {@link ng.directive:input input} or
-   * {@link ng.directive:select select} directives call it.
+   * Этот метод необходимо вызывать из обработчика события DOM.
+   * Например, его вызывают директивы {@link ng.directive:input input} или {@link ng.directive:select select}.
    *
-   * It internally calls all `formatters` and if resulted value is valid, updates the model and
-   * calls all registered change listeners.
+   * Это вызывает внутри всех «форматеров» и, если результирующее значение корректно, обновляет модель
+   * и вызывает всех зарегистрированных слушателей изменений.
    *
-   * @param {string} value Value from the view.
+   * @param {string} value Значение из вида.
    */
   this.$setViewValue = function(value) {
     this.$viewValue = value;
@@ -1084,19 +1077,18 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
  * @element input
  *
  * @description
- * Is directive that tells Angular to do two-way data binding. It works together with `input`,
- * `select`, `textarea`. You can easily write your own directives to use `ngModel` as well.
+ * Эта директива указывает Angular, что необходимо двухсторонее связывание данных. Что всегда применяется в 
+ * директивах `input`, `select`, `textarea`. Можно легко писать собственные директивы, используя в них `ngModel`.
+ * 
+ * `ngModel` отвечает за:
+ * 
+ * - связывание вида с моделью при использовании с другими директивами, такими как `input`, `textarea` или `select`,
+ * - реализует поведение для проверки ввода (например, required, number, email, url),
+ * - определяет состояние элементов управления (valid/invalid, dirty/pristine, validation errors),
+ * - устанавливает требуемый css-класс для элемента (ng-valid, ng-invalid, ng-dirty, ng-pristine),
+ * - регистрирует элемент управления в родительской директиве {@link ng.directive:form form}.
  *
- * `ngModel` is responsible for:
- *
- * - binding the view into the model, which other directives such as `input`, `textarea` or `select`
- *   require,
- * - providing validation behavior (i.e. required, number, email, url),
- * - keeping state of the control (valid/invalid, dirty/pristine, validation errors),
- * - setting related css class onto the element (`ng-valid`, `ng-invalid`, `ng-dirty`, `ng-pristine`),
- * - register the control with parent {@link ng.directive:form form}.
- *
- * For basic examples, how to use `ngModel`, see:
+ * Примеры использования `ngModel`, смотрите здесь:
  *
  *  - {@link ng.directive:input input}
  *    - {@link ng.directive:input.text text}
@@ -1135,10 +1127,10 @@ var ngModelDirective = function() {
  * @restrict E
  *
  * @description
- * Evaluate given expression when user changes the input.
- * The expression is not evaluated when the value change is coming from the model.
- *
- * Note, this directive requires `ngModel` to be present.
+ * Вызывает определенную функцию, если пользователь изменил значение поля ввода. Функция не вызывается, 
+ * если изменение исходит от модели.
+ * 
+ * Заметьте, эта директива требует наличия директивы `ngModel` в том же элементе.
  *
  * @element input
  *
@@ -1220,11 +1212,11 @@ var requiredDirective = function() {
  * @name ng.directive:ngList
  *
  * @description
- * Text input that converts between comma-separated string into an array of strings.
+ * Преобразует входной текст в массив строк по заданному разделителю.
  *
  * @element input
- * @param {string=} ngList optional delimiter that should be used to split the value. If
- *   specified in form `/something/` then the value will be converted into a regular expression.
+ * @param {string=} ngList не обязательный символ разделителя, который будет использоваться при разделении строки. 
+ * Если задается в форме `/something/`, значение будет преобразовано в регулярное выражение.
  *
  * @example
     <doc:example>

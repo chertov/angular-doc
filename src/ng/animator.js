@@ -7,51 +7,56 @@
  * @name ng.directive:ngAnimate
  *
  * @description
- * The `ngAnimate` directive works as an attribute that is attached alongside pre-existing directives.
- * It effects how the directive will perform DOM manipulation. This allows for complex animations to take place
- * without burdening the directive which uses the animation with animation details. The built in directives
- * `ngRepeat`, `ngInclude`, `ngSwitch`, `ngShow`, `ngHide` and `ngView` already accept `ngAnimate` directive.
- * Custom directives can take advantage of animation through {@link ng.$animator $animator service}.
+ * Директива `ngAnimate` работает как атрибут, который прилагается к уже существующим директивам.
+ * Он воспроизводит эффект выполнения DOM-манипуляций. Это позволяет воспроизводить сложную анимацию 
+ * не обременя директиву, которая её использует, деталями анимации. Директивы
+ * `ngRepeat`, `ngInclude`, `ngSwitch`, `ngShow`, `ngHide` и `ngView` уже поддерживают директиву `ngAnimate`.
+ * Пользовательские директивы могут воспроизводить анимацию с помощью сервиса {@link ng.$animator $animator}.
  *
- * Below is a more detailed breakdown of the supported callback events provided by pre-exisitng ng directives:
+ * Ниже показано для каких событий поддерживается анимация в ng-директивах:
  *
- * * {@link ng.directive:ngRepeat#animations ngRepeat} — enter, leave and move
- * * {@link ng.directive:ngView#animations ngView} — enter and leave
- * * {@link ng.directive:ngInclude#animations ngInclude} — enter and leave
- * * {@link ng.directive:ngSwitch#animations ngSwitch} — enter and leave
- * * {@link ng.directive:ngShow#animations ngShow & ngHide} - show and hide respectively
+ * | Директива                                                        | Поддерживаемая анимация               |<br/>
+ * |================                                                  |======================                 |<br/>
+ * | {@link ng.directive:ngRepeat#animations ngRepeat}                | enter, leave and move                 |<br/>
+ * | {@link ng.directive:ngView#animations ngView}                    | enter and leave                       |<br/>
+ * | {@link ng.directive:ngInclude#animations ngInclude}              | enter and leave                       |<br/>
+ * | {@link ng.directive:ngSwitch#animations ngSwitch}                | enter and leave                       |<br/>
+ * | {@link ng.directive:ngIf#animations ngIf}                        | enter and leave                       |<br/>
+ * | {@link ng.directive:ngShow#animations ngShow & ngHide}           | show and hide                         |<br/>
  *
- * You can find out more information about animations upon visiting each directive page.
+ * Подробную информацию об использовании анимации можно найти на странице каждой директивы.
  *
- * Below is an example of a directive that makes use of the ngAnimate attribute:
+ * Ниже приведен пример директивы, использующей атрибут ngAnimate:
  *
  * <pre>
- * <!-- you can also use data-ng-animate, ng:animate or x-ng-animate as well -->
+ * <!-- Также можно использовать data-ng-animate, ng:animate или x-ng-animate -->
  * <ANY ng-directive ng-animate="{event1: 'animation-name', event2: 'animation-name-2'}"></ANY>
  *
- * <!-- you can also use a short hand -->
+ * <!-- Также можно использовать короткую запись -->
  * <ANY ng-directive ng-animate=" 'animation' "></ANY>
- * <!-- which expands to -->
+ * <!-- которая раскрывается в -->
  * <ANY ng-directive ng-animate="{ enter: 'animation-enter', leave: 'animation-leave', ...}"></ANY>
  *
- * <!-- keep in mind that ng-animate can take expressions -->
+ * <!-- имейте в виду, что в ng-animate могут использоваться выражения -->
  * <ANY ng-directive ng-animate=" computeCurrentAnimation() "></ANY>
  * </pre>
  *
- * The `event1` and `event2` attributes refer to the animation events specific to the directive that has been assigned.
+ * Атрибуты `event1` and `event2` относятся к конкретным событиям анимации в директиве, на которой они назначены.
  *
- * Keep in mind that if an animation is running, no child element of such animation can also be animated.
+ * Имейте ввиду, что при показе анимации, ни один потомок такой анимации не может быть анимирован.
  *
- * <h2>CSS-defined Animations</h2>
- * By default, ngAnimate attaches two CSS3 classes per animation event to the DOM element to achieve the animation.
- * It is up to you, the developer, to ensure that the animations take place using cross-browser CSS3 transitions.
- * All that is required is the following CSS code:
+ * <h2>CSS-анимация</h2>
+ * По умолчанию ngAnimate задействует для события анимации два CSS-класса DOM-элемента. Вы, разработчики, 
+ * должны гарантировать, что анимация будет происходить с использованием кросс-браузерных CSS3-переходов
+ * так же, как и CSS-анимация.
+ * 
+ * Код ниже показывает как осуществить CSS-анимацию, используя **CSS переходы** c ngAnimate:
  *
  * <pre>
  * <style type="text/css">
  * /&#42;
- *  The animate-enter prefix is the event name that you
- *  have provided within the ngAnimate attribute.
+ *  CSS-класс animate-enter является именем события, 
+ *  подставленным в атрибут ngAnimate.
  * &#42;/
  * .animate-enter-setup {
  *  -webkit-transition: 1s linear all; /&#42; Safari/Chrome &#42;/
@@ -60,51 +65,81 @@
  *  -o-transition: 1s linear all; /&#42; Opera &#42;/
  *  transition: 1s linear all; /&#42; Future Browsers &#42;/
  *
- *  /&#42; The animation preparation code &#42;/
+ *  /&#42; Подготовка кода анимации &#42;/
  *  opacity: 0;
  * }
  *
  * /&#42;
- *  Keep in mind that you want to combine both CSS
- *  classes together to avoid any CSS-specificity
- *  conflicts
+ *  Имейте в виду, что можно совместить оба CSS-класса
+ *  вместе, чтобы избежать любых конфликтов CSS
  * &#42;/
  * .animate-enter-setup.animate-enter-start {
- *  /&#42; The animation code itself &#42;/
+ *  /&#42; Код анимации &#42;/
  *  opacity: 1;
  * }
  * </style>
  *
  * <div ng-directive ng-animate="{enter: 'animate-enter'}"></div>
  * </pre>
+ * 
+ * Код ниже показывает как осуществить CSS-анимацию, используя **CSS переходы** c ngAnimate: 
+ * 
+ * <pre>
+ * <style type="text/css">
+ * .animate-enter-setup {
+ *    -webkit-animation: enter_sequence 1s linear;
+ *    -moz-animation: enter_sequence 1s linear;
+ *    -o-animation: enter_sequence 1s linear;
+ *    animation: enter_sequence 1s linear;
+ *  }
+ * &#64-webkit-keyframes enter_sequence {
+ *    from { opacity:0; }
+ *    to { opacity:1; }
+ *  }
+ * &#64-moz-keyframes enter_sequence {
+ *    from { opacity:0; }
+ *    to { opacity:1; }
+ *  }
+ * &#64-o-keyframes enter_sequence {
+ *    from { opacity:0; }
+ *    to { opacity:1; }
+ * }
+ * &#64keyframes enter_sequence {
+ *    from { opacity:0; }
+ *    to { opacity:1; }
+ * }
+ * </style>
+ * 
+ * <div ng-directive ng-animate="{enter: 'animate-enter'}"></div>
+ * </pre>
+ * 
+ * ngAnimate сперва проверит любой код CSS-анимации, а затем возвратится к использованию CSS-переходов.
+ * 
+ * При возникновении мутации DOM, сперва устанавливается класс, затем браузеру разрешается форматировать содержимое, 
+ * а затем добавляется класс для запуска анимации. Директива ngAnimate автоматически определит продолжительность 
+ * анимации, чтобы узнать, когда она заканчивается. После окончания анимация, оба CSS-класса удалятся из DOM. 
+ * Если браузер не поддерживает CSS-переходы и CSS-анимацию, то анимация начнется и сразу закончится, 
+ * установив DOM-элемент в конечное состояние. В конечном состоянии DOM-элемент не содержит классов анимации/переходов.
  *
- * Upon DOM mutation, the setup class is added first, then the browser is allowed to reflow the content and then,
- * the start class is added to trigger the animation. The ngAnimate directive will automatically extract the duration
- * of the animation to determine when the animation ends. Once the animation is over then both CSS classes will be
- * removed from the DOM. If a browser does not support CSS transitions then the animation will start and end
- * immediately resulting in a DOM element that is at it's final state. This final state is when the DOM element
- * has no CSS animation classes surrounding it.
- *
- * <h2>JavaScript-defined Animations</h2>
- * In the event that you do not want to use CSS3 animations or if you wish to offer animations to browsers that do not
- * yet support them, then you can make use of JavaScript animations defined inside ngModule.
- *
+ * <h2>JavaScript-анимация</h2>
+ * Если не хотите использовать CSS3-анимацию или переходы или хотите использовать ее в браузерах, которые ее не 
+ * поддерживают, можно использовать JavaScript-анимацию, определенную внутри вашего angular-модуля.
  * <pre>
  * var ngModule = angular.module('YourApp', []);
  * ngModule.animation('animate-enter', function() {
  *   return {
  *     setup : function(element) {
- *       //prepare the element for animation
+ *       //подготовка элемента для анимации
  *       element.css({ 'opacity': 0 });
- *       var memo = "..."; //this value is passed to the start function
+ *       var memo = "..."; //значение для предачи в функцию start
  *       return memo;
  *     },
  *     start : function(element, done, memo) {
- *       //start the animation
+ *       //запуск анимации
  *       element.animate({
  *         'opacity' : 1
  *       }, function() {
- *         //call when the animation is complete
+ *         //вызывается при завершении анимации
  *         done()
  *       });
  *     }
@@ -112,14 +147,14 @@
  * });
  * </pre>
  *
- * As you can see, the JavaScript code follows a similar template to the CSS3 animations. Once defined, the animation
- * can be used in the same way with the ngAnimate attribute. Keep in mind that, when using JavaScript-enabled
- * animations, ngAnimate will also add in the same CSS classes that CSS-enabled animations do (even if you're using
- * JavaScript animations) to animated the element, but it will not attempt to find any CSS3 transition duration value.
- * It will instead close off the animation once the provided done function is executed. So it's important that you
- * make sure your animations remember to fire off the done function once the animations are complete.
+ * Можно заметить, что код JavaScript придерживается аналогичного шаблона CSS3-анимации. После определения, анимация 
+ * может быть использована так же с атрибутом ngAnimate. Имейте в виду, что при использовании JavaScript-анимации, 
+ * ngAnimate добавит в элемент такие же CSS-классы, какие добавляются при поддержке CSS3 анимации (даже если не
+ * используется CSS-анимация), но она не будет пытаться найти любые CSS3-значения продолжительности перехода/анимации. 
+ * Это заблокирует анимацию пока хотя бы раз не будет выполнена функция. Так что важно убедиться, чтобы анимация 
+ * не забыла хотя бы раз запустить функцию для завершения.
  *
- * @param {expression} ngAnimate Used to configure the DOM manipulation animations.
+ * @param {expression} ngAnimate Используется для настройки анимации DOM-манипуляций.
  *
  */
 
@@ -145,12 +180,13 @@ var $AnimatorProvider = function() {
      * @function
      *
      * @description
-     * The $animator.create service provides the DOM manipulation API which is decorated with animations.
+     * 
+     * Сервис $animator.create предоставляет API DOM-манипуляций необходимое для анимационных эффектов.
      *
-     * @param {Scope} scope the scope for the ng-animate.
-     * @param {Attributes} attr the attributes object which contains the ngAnimate key / value pair. (The attributes are
-     *        passed into the linking function of the directive using the `$animator`.)
-     * @return {object} the animator object which contains the enter, leave, move, show, hide and animate methods.
+     * @param {Scope} scope Область видимости для ng-animate.
+     * @param {Attributes} attr Объект с атрибутами, содержащий пары ключ-значение для ngAnimate. (Атрибуты
+     *        передаются в функцию линковки директивы, использующей `$animator`.)
+     * @return {object} объект аниматора, содержащий enter, leave, move, show, hide и анимационные методы.
      */
      var AnimatorService = function(scope, attrs) {
         var ngAnimateAttr = attrs.ngAnimate;
@@ -164,11 +200,11 @@ var $AnimatorProvider = function() {
          * @function
          *
          * @description
-         * Injects the element object into the DOM (inside of the parent element) and then runs the enter animation.
+         * Внедряет объект элемента в DOM (внутрь родительского элемента) а затем запускает enter анимацию.
          *
-         * @param {jQuery/jqLite element} element the element that will be the focus of the enter animation
-         * @param {jQuery/jqLite element} parent the parent element of the element that will be the focus of the enter animation
-         * @param {jQuery/jqLite element} after the sibling element (which is the previous element) of the element that will be the focus of the enter animation
+         * @param {jQuery/jqLite element} element Элемент, который будет в фокусе enter анимации.
+         * @param {jQuery/jqLite element} parent Родитель элемента, который будет в фокусе enter анимации.
+         * @param {jQuery/jqLite element} after Сестринский элемент (предыдущий) элемента, который будет в фокусе enter анимации.
         */
         animator.enter = animateActionFactory('enter', insert, noop);
   
@@ -179,10 +215,10 @@ var $AnimatorProvider = function() {
          * @function
          *
          * @description
-         * Runs the leave animation operation and, upon completion, removes the element from the DOM.
+         * Выполняет анимацию leave и, при заверщении, удаляет элемент из DOM.
          *
-         * @param {jQuery/jqLite element} element the element that will be the focus of the leave animation
-         * @param {jQuery/jqLite element} parent the parent element of the element that will be the focus of the leave animation
+         * @param {jQuery/jqLite element} element Элемент, который будет в фокусе leave анимации.
+         * @param {jQuery/jqLite element} parent Родитель элемента, который будет в фокусе leave анимации.
         */
         animator.leave = animateActionFactory('leave', noop, remove);
   
@@ -193,12 +229,13 @@ var $AnimatorProvider = function() {
          * @function
          *
          * @description
-         * Fires the move DOM operation. Just before the animation starts, the animator will either append it into the parent container or
-         * add the element directly after the after element if present. Then the move animation will be run.
+         * Запускает операцию move перемещения DOM. Незадолго до начала анимации, аниматор либо добавит его в 
+         * родительский контейнер либо добавить элемент сразу за элементом, если тот присутствует. Тогда 
+         * анимация move будет выполнена.
          *
-         * @param {jQuery/jqLite element} element the element that will be the focus of the move animation
-         * @param {jQuery/jqLite element} parent the parent element of the element that will be the focus of the move animation
-         * @param {jQuery/jqLite element} after the sibling element (which is the previous element) of the element that will be the focus of the move animation
+         * @param {jQuery/jqLite element} element Элемент, который будет в фокусе move анимации.
+         * @param {jQuery/jqLite element} parent the Родитель элемента, который будет в фокусе move анимации.
+         * @param {jQuery/jqLite element} after the Сестринский элемент (предыдущий) элемента, который будет в фокусе move анимации.
         */
         animator.move = animateActionFactory('move', move, noop);
   
@@ -209,9 +246,10 @@ var $AnimatorProvider = function() {
          * @function
          *
          * @description
-         * Reveals the element by setting the CSS property `display` to `block` and then starts the show animation directly after.
-         *
-         * @param {jQuery/jqLite element} element the element that will be rendered visible or hidden
+         * Показывает элемент, установив CSS свойство `display` в `block`, а затем, непосредственно после этого,
+         * начинает показывать анимацию 
+         * 
+         * @param {jQuery/jqLite element} element Элемент, который будет показан или скрыт
         */
         animator.show = animateActionFactory('show', show, noop);
   
@@ -221,11 +259,25 @@ var $AnimatorProvider = function() {
          * @methodOf ng.$animator
          *
          * @description
-         * Starts the hide animation first and sets the CSS `display` property to `none` upon completion.
+         * Сперва запускает анимацию скрытия и устанавливает CSS свойство `display` в `none` после завершения.
          *
-         * @param {jQuery/jqLite element} element the element that will be rendered visible or hidden
+         * @param {jQuery/jqLite element} element Элемент, который будет показан или скрыт
         */
         animator.hide = animateActionFactory('hide', noop, hide);
+
+        /**
+         * @ngdoc function
+         * @name ng.animator#animate
+         * @methodOf ng.$animator
+         * 
+         * @description
+         * Триггеры для пользовательского события анимации, которые будут выполнены для данного элемента
+         * 
+         * @param {jQuery/jqLite element} элемент, который будет анимирован
+         */
+        animator.animate = function(event, element) {
+           animateActionFactory(event, noop, noop)(element);
+        }
         return animator;
   
         function animateActionFactory(type, beforeFn, afterFn) {
@@ -319,6 +371,19 @@ var $AnimatorProvider = function() {
           }
         }
   
+        /**
+         * @ngdoc function
+         * @name ng.animator#enabled
+         * @methodOf ng.$animator
+         * @function
+         *
+         * @param {Boolean=} Если установлено true, то анимации включены, иначе отключены
+         * @return {Boolean} Текущее глобальное состояние анимаций.
+         *
+         * @description
+         * Глобальное включение/выключение анимаций.
+         *
+         */
         function remove(element) {
           element.remove();
         }
@@ -336,11 +401,11 @@ var $AnimatorProvider = function() {
      * @methodOf ng.$animator
      * @function
      *
-     * @param {Boolean=} If provided then set the animation on or off.
-     * @return {Boolean} Current animation state.
+     * @param {Boolean=} Если установлен, то анимация включена, иначе выключена.
+     * @return {Boolean} Текущее состояние анимации
      *
      * @description
-     * Globally enables/disables animations.
+     * Глобальное включение/выключение анимаций.
      *
     */
     AnimatorService.enabled = function(value) {

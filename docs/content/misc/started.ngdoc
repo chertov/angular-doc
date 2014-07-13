@@ -2,7 +2,7 @@
 @name С чего начать
 @description
 
-Мы хотим, чтобы вы как можно легче освоили Angular. Мы подготовили следующие шаги на пути к тому, чтобы стать экспертом в Angular.
+Наша цель, чтобы вы как можно легче освоили Angular. Мы подготовили следующие шаги на пути к тому, чтобы стать экспертом в Angular.
 
 1. Прочтите {@link guide/concepts основные понятия}.<br/>Освойте лексику Angular и то как основные компоненты Angular
    работают вместе.
@@ -42,6 +42,21 @@
 * {@link http://habrahabr.ru/post/142590 7 причин, почему AngularJS крут}
 * {@link http://habrahabr.ru/post/165275 Ключевое отличие AngularJS от Knockout}
 * {@link http://habrahabr.ru/post/164493 Директивы в AngularJS}
+* {@link http://habrahabr.ru/post/179755 Директивы в Angularjs для начинающих. Часть 1}
+* {@link http://habrahabr.ru/post/180365 Директивы в Angularjs для начинающих. Часть 2}
 * {@link http://habrahabr.ru/post/167793 Валидация форм в AngularJS}
 * {@link http://habrahabr.ru/post/149757 Практикум AngularJS — разработка административной панели}
 * {@link http://habrahabr.ru/post/150321 Практикум AngularJS — разработка административной панели (часть 2)}
+* {@link http://habrahabr.ru/post/172975 AngularJS для привыкших к jQuery}
+* {@link http://habrahabr.ru/post/178753 AngularJs. Отложенная загрузка модулей}
+* {@link http://gulin.pro/2012/12/e2e-single-page-applications-angularjs/ E2E тестирование AngularJS Single Page Applications}
+* {@link http://job-blog.bullgare.ru/category/programming/javascript/angular-js-javascript Заметки по AngularJS}
+
+##Статьи на английском
+* {@link https://github.com/jmcunningham/AngularJS-Learning Большой список всего-всего по Ангуляру (англ.)}
+
+##Примеры
+
+* {@link https://github.com/angular/angular.js/wiki/JSFiddle-Examples}
+* {@link http://javascript.ru/forum/angular/38293-igra-v-demki-piar-angulyara-i-obuchenie.html}
+* {@link http://angular.ru/cookbook/}

@@ -19,11 +19,11 @@
     // before the base attribute is added, causing 404 and terribly slow loading of the docs app.
     (function() {
       var indexFile = (location.pathname.match(/\/(index[^\.]*\.html)/) || ['', 'index.html'])[1],
-          rUrl = /(#!\/|api|guide|misc|tutorial|cookbook|index[^\.]*\.html).*$/,
+          rUrl = /(#!\/|api|guide|misc|tutorial|cookbook|ui|index[^\.]*\.html).*$/,
           baseUrl = location.href.replace(rUrl, indexFile),
           jQuery = /index-jq[^\.]*\.html$/.test(baseUrl),
           debug = /index[^\.]*-debug\.html$/.test(baseUrl),
-          production = location.hostname === 'docs.angularjs.org',
+          production = location.hostname === 'angular.ru' || /production=true/.test(location.search),
           headEl = document.getElementsByTagName('head')[0],
           sync = true,
           angularVersion = {
@@ -128,10 +128,11 @@
                 <i class="icon-eye-open icon-white"></i> Обучение <b class="caret"></b>
               </a>
               <ul class="dropdown-menu">
-                <li class="disabled"><a href="/">Почему AngularJS?</a></li>
+                <li><a href="misc/started">С чего начать</a></li>
                 <li><a href="http://www.youtube.com/user/angularjs">Видео</a></li>
                 <li><a href="tutorial">Учебник</a></li>
-                <li><a href="http://builtwith.angularjs.org/">Примеры</a></li>
+                <li><a href="http://builtwith.angularjs.org/">Примеры использования</a></li>
+                <li><a href="https://github.com/angular/angular-seed">Шаблонное приложение</a></li>
                 <li><a href="misc/faq">FAQ</a></li>
               </ul>
             </li>
@@ -142,9 +143,11 @@
               </a>
               <ul class="dropdown-menu">
                 <li><a href="/tutorial">Учебник</a></li>
-                <li><a href="/guide/">Руководство</a></li>
+                <li><a href="/guide/">Руководство разработчика</a></li>
                 <li><a href="/api/">Справочник API</a></li>
-                <li><a href="http://docs.angularjs.org/misc/contribute">Сотрудничество</a></li>
+                <li><a href="/ui/">UI-Router</a></li>
+                <li><a href="/cookbook/">Рецепты</a></li>
+                <li><a href="/misc/contribute">Сотрудничество</a></li>
                 <li><a href="http://code.angularjs.org/">Скачать</a></li>
               </ul>
             </li>
@@ -154,8 +157,9 @@
                 <i class="icon-comment icon-white"></i> Обсуждение <b class="caret"></b>
               </a>
               <ul class="dropdown-menu">
+                <li><a href="http://javascript.ru/forum/angular/">Русскоязычный форум</a></li>
                 <li><a href="http://blog.angularjs.org/">Блог</a></li>
-                <li><a href="http://groups.google.com/group/angular">Mailing List</a></li>
+                <li><a href="http://groups.google.com/group/angular">Список рассылки</a></li>
                 <li><a href="http://webchat.freenode.net/?channels=angularjs&uio=d4">Chat Room</a></li>
                 <li class="divider"></li>
                 <li><a href="https://twitter.com/#!/angularjs">Twitter</a></li>
@@ -163,13 +167,15 @@
                 <li class="divider"></li>
                 <li><a href="https://github.com/angular/angular.js">GitHub</a></li>
                 <li><a href="https://github.com/angular/angular.js/issues">Issue Tracker</a></li>
+                <li class="divider"></li>
+                <li><a href="/misc/translate">Перевод на русский</a></li>
               </ul>
             </li>
             <li class="divider-vertical"></li>
           </ul>
           <form class="navbar-search pull-right" method="GET" action="https://www.google.com/search">
             <input type="text" name="as_q" class="search-query" placeholder="Поиск">
-            <input type="hidden" name="as_sitesearch" value="angularjs.org">
+            <input type="hidden" name="as_sitesearch" value="angular.ru">
           </form>
         </div>
       </div>
@@ -317,7 +323,7 @@
       <p class="pull-right"><a href="#">Наверх</a></p>
 
       <p>
-        Супер-разработка Google, супер-перевод на русский язык tamtakoe, maksimr, vsorlov, altbog, alvas, madhead, DWand, Chiuaua, davetoxa и др. ©2010-2013
+        Супер-разработка Google, супер-перевод на русский язык tamtakoe, maksimr, vsorlov, altbog, alvas, madhead, DWand, Chiuaua, davetoxa, nikolaifedorov и др. ©2010-2013
         ( <a id="version"
              ng-href="https://github.com/angular/angular.js/blob/master/CHANGELOG.md#{{versionNumber}}"
              ng-bind-template="v{{version}}">

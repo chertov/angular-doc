@@ -6,25 +6,26 @@
  * @requires $rootScope
  *
  * @description
- * A promise/deferred implementation inspired by [Kris Kowal's Q](https://github.com/kriskowal/q).
- *
- * [The CommonJS Promise proposal](http://wiki.commonjs.org/wiki/Promises) describes a promise as an
- * interface for interacting with an object that represents the result of an action that is
- * performed asynchronously, and may or may not be finished at any given point in time.
- *
- * From the perspective of dealing with error handling, deferred and promise APIs are to
- * asynchronous programming what `try`, `catch` and `throw` keywords are to synchronous programming.
+ * Реализация обещаний/должников (promise/deferred) навеяна библиотекой 
+ * [Q Криса Коваля](https://github.com/kriskowal/q). 
+ * 
+ * Раздел [Promises](http://wiki.commonjs.org/wiki/Promises) учебника CommonJS описывает обещание как интерфейс 
+ * для взаимодействия с объектом, определенным асинхронно, т. е. результат его действий появится в будущем и 
+ * в момент взаимодействия может быть неопределенным.
+ * 
+ * С точки зрения обработки ошибок, операторы `try`, `catch` и `throw` в API должников и обещаний  
+ * используются асинхронно даже в синхронном программировании.
  *
  * <pre>
- *   // for the purpose of this example let's assume that variables `$q` and `scope` are
- *   // available in the current lexical scope (they could have been injected or passed in).
+ *   // чтобы лучше понять пример, посмотрите применение переменных `$q` и `scope`,
+ *   // доступных в текущей области видимости (они должны быть внедрены или переданы в нее).
  *
  *   function asyncGreet(name) {
  *     var deferred = $q.defer();
  *
  *     setTimeout(function() {
- *       // since this fn executes async in a future turn of the event loop, we need to wrap
- *       // our code into an $apply call so that the model changes are properly observed.
+ *       // функция выполняется асинхронно в будущем цикле событий, нам нужно обернуть
+ *       // ваш код и передать в вызов $apply чтобы уведомить об его изменениях.
  *       scope.$apply(function() {
  *         if (okToGreet(name)) {
  *           deferred.resolve('Hello, ' + name + '!');
@@ -45,86 +46,90 @@
  *   });
  * </pre>
  *
- * At first it might not be obvious why this extra complexity is worth the trouble. The payoff
- * comes in the way of
- * [guarantees that promise and deferred APIs make](https://github.com/kriskowal/uncommonjs/blob/master/promises/specification.md).
+ * Не совсем очевидно, для чего это нужно и зачем так усложнять код. Выигрыш появляется в результате [гарантий 
+ * выполнения обещания и долга](https://github.com/kriskowal/uncommonjs/blob/master/promises/specification.md).
+ * 
+ * Дополнительно api обещания позволяет использовать композицию, что очень трудно сделать с традиционным
+ * подходом ([CPS](http://en.wikipedia.org/wiki/Continuation-passing_style)) к колбэкам. Для большей информации
+ * смотрите [документацию по Q](https://github.com/kriskowal/q), особенно раздел о последовательном 
+ * и параллельном присоединении обещания.
+ * 
  *
- * Additionally the promise api allows for composition that is very hard to do with the
- * traditional callback ([CPS](http://en.wikipedia.org/wiki/Continuation-passing_style)) approach.
- * For more on this please see the [Q documentation](https://github.com/kriskowal/q) especially the
- * section on serial or parallel joining of promises.
+ * # API должника (deferred)
  *
+ * Новый экземпляр должника создается вызовом функции `$q.defer()`.
+ * 
+ * Должник, используя ассоциированный экземпляр обещания, уведомляет об успешном или нет 
+ * завершении асинхронной задачи.
  *
- * # The Deferred API
+ * **Методы**
  *
- * A new instance of deferred is constructed by calling `$q.defer()`.
+ * - `resolve(value)` – принимает обещанное значение `value`. Если `value` отклонено `$q.reject` как 
+ *   ошибочное, то обещание будет определено ошибочным.
+ * - `reject(reason)` – отклоняет обещание с указанием причины `reason`. Это эквивалентно приему и
+ *   последующему отклонению с использованием конструктора `$q.reject`.
  *
- * The purpose of the deferred object is to expose the associated Promise instance as well as APIs
- * that can be used for signaling the successful or unsuccessful completion of the task.
+ * **Свойства**
  *
- * **Methods**
- *
- * - `resolve(value)` – resolves the derived promise with the `value`. If the value is a rejection
- *   constructed via `$q.reject`, the promise will be rejected instead.
- * - `reject(reason)` – rejects the derived promise with the `reason`. This is equivalent to
- *   resolving it with a rejection constructed via `$q.reject`.
- *
- * **Properties**
- *
- * - promise – `{Promise}` – promise object associated with this deferred.
- *
- *
- * # The Promise API
- *
- * A new promise instance is created when a deferred instance is created and can be retrieved by
- * calling `deferred.promise`.
- *
- * The purpose of the promise object is to allow for interested parties to get access to the result
- * of the deferred task when it completes.
- *
- * **Methods**
- *
- * - `then(successCallback, errorCallback)` – regardless of when the promise was or will be resolved
- *   or rejected calls one of the success or error callbacks asynchronously as soon as the result
- *   is available. The callbacks are called with a single argument the result or rejection reason.
- *
- *   This method *returns a new promise* which is resolved or rejected via the return value of the
- *   `successCallback` or `errorCallback`.
+ * - promise – `{Promise}` – объект обещания ассоциированный с должником.
  *
  *
- * # Chaining promises
+ * # API обещания (promise)
  *
- * Because calling `then` api of a promise returns a new derived promise, it is easily possible
- * to create a chain of promises:
+ * Новый экземпляр обещания создается вместе с экземпляром должника и может извлекаться с помощью 
+ * метода `deferred.promise`.
+ * 
+ * Обещание позволяет заинтересованным объектам получить доступ к результату отложенной
+ * задачи, после ее выполнения.
+ * 
+ * **Методы**
+ *
+ * - `then(successCallback, errorCallback)` – независимо от того, было ли обещание принято или 
+ *   отклонено, выполнится один из колбэков, как только результат станет доступным. В колбэк 
+ *   передается один аргумент – результат или причина отказа.
+ *
+ *   Этот метод *возвращает новое обещание*, которое принимается или откланяется с возвращаемым значением 
+ *   для `successCallback` или `errorCallback`.
+ * 
+ * - `always(callback)` – позволяет наблюдать за каждым выполнением или отклонением обещания, но делать 
+ *    это без изменения конечного значения, что полезно для освобождения ресурсов или для любой
+ *    чистки, которая должна быть проведена после того как обещание было принято или отклонено. См. так же
+ *    [полную спецификацию](https://github.com/kriskowal/q/wiki/API-Reference#promisefinallycallback).
+ * 
+ *
+ * # Цепочки обещаний
+ *
+ * Вызов `then` возвращает новое обещание, что позволяет легко создавать цепочку обещаний:
  *
  * <pre>
  *   promiseB = promiseA.then(function(result) {
  *     return result + 1;
  *   });
  *
- *   // promiseB will be resolved immediately after promiseA is resolved and its value will be
- *   // the result of promiseA incremented by 1
+ *   // promiseB будет принято после принятия promiseA и его значением будет
+ *   // результат promiseA увеличенный на 1
  * </pre>
  *
- * It is possible to create chains of any length and since a promise can be resolved with another
- * promise (which will defer its resolution further), it is possible to pause/defer resolution of
- * the promises at any point in the chain. This makes it possible to implement powerful apis like
- * $http's response interceptors.
+ * Это позволяет создавать цепочки из любого количества обещаний, которые могут приниматься другими
+ * обещаниями (каждое будет должно следующему), поэтому можно установить паузу/отложить определение 
+ * обещания в любой части цепочки. Это делает простым реализацию полного api для перехватчика ответов 
+ * $http.
  *
  *
- * # Differences between Kris Kowal's Q and $q
+ * # Различия между Q Криса Коваля и $q
  *
- *  There are three main differences:
+ *  Они имеют три главных отличия:
  *
- * - $q is integrated with the {@link ng.$rootScope.Scope} Scope model observation
- *   mechanism in angular, which means faster propagation of resolution or rejection into your
- *   models and avoiding unnecessary browser repaints, which would result in flickering UI.
- * - $q promises are recognized by the templating engine in angular, which means that in templates
- *   you can treat promises attached to a scope as if they were the resulting values.
- * - Q has many more features that $q, but that comes at a cost of bytes. $q is tiny, but contains
- *   all the important functionality needed for common async tasks.
+ * - $q интегрирован в модель {@link ng.$rootScope.Scope области видимости} и имеет механизм наблюдения, 
+ *   что означает быстрое распространение принятия или отклонения в модели, избегая ненужных 
+ *   перерисовок в браузере, что привело бы к мерцанию пользовательского интерфейса.
+ * - $q обещание поддерживается движком шаблонов в Angular, поэтому в шаблонах можно использовать 
+ *   обещания в области видимости, так, как будто это результирующие значения.
+ * - Q имеет больше возможностей, чем $q, но это делает его более увесистым. $q маленький, но содержит всю 
+ *   требующуюся функциональность для реализации асинхронных задач.
  * 
- *  # Testing
+ * 
+ *  # Тестирование
  * 
  *  <pre>
  *    it('should simulate promise', inject(function($q, $rootScope) {
@@ -135,14 +140,14 @@
  *      promise.then(function(value) { resolvedValue = value; });
  *      expect(resolvedValue).toBeUndefined();
  * 
- *      // Simulate resolving of promise
+ *      // Симуляция принятия обещания
  *      deferred.resolve(123);
- *      // Note that the 'then' function does not get called synchronously.
- *      // This is because we want the promise API to always be async, whether or not
- *      // it got called synchronously or asynchronously.
+ *      // Заметьте, что функция 'then' не вызывается синхронно.
+ *      // Это потому, что мы хотим чтобы обещание всегда работало асинхронно,
+ *      // не зависимо от синхронного или асинхронного вызова.
  *      expect(resolvedValue).toBeUndefined();
  * 
- *      // Propagate promise resolution to 'then' functions using $apply().
+ *      // Распространение обещания функцией 'then' используя $apply().
  *      $rootScope.$apply();
  *      expect(resolvedValue).toEqual(123);
  *    });
@@ -173,9 +178,9 @@ function qFactory(nextTick, exceptionHandler) {
    * @name ng.$q#defer
    * @methodOf ng.$q
    * @description
-   * Creates a `Deferred` object which represents a task which will finish in the future.
+   * Создает объект должника (`deferred`) представляющего задачу, которая будет завершена в будущем.
    *
-   * @returns {Deferred} Returns a new instance of deferred.
+   * @returns {Deferred} Возвращает новый экземпляр должника.
    */
   var defer = function() {
     var pending = [],
@@ -263,35 +268,35 @@ function qFactory(nextTick, exceptionHandler) {
    * @name ng.$q#reject
    * @methodOf ng.$q
    * @description
-   * Creates a promise that is resolved as rejected with the specified `reason`. This api should be
-   * used to forward rejection in a chain of promises. If you are dealing with the last promise in
-   * a promise chain, you don't need to worry about it.
-   *
-   * When comparing deferreds/promises to the familiar behavior of try/catch/throw, think of
-   * `reject` as the `throw` keyword in JavaScript. This also means that if you "catch" an error via
-   * a promise error callback and you want to forward the error to the promise derived from the
-   * current promise, you have to "rethrow" the error by returning a rejection constructed via
-   * `reject`.
+   * Создает обещание (`promise`) с состоянием «отклонено» с указанием причины отклонения `reason`. Это 
+   * отклонит всю вышестоящую цепочку обещаний. Если отклонено последнее обещание в цепочке, не нужно делать
+   * это для остальных.
+   * 
+   * Если проводить параллель должников/обещаний с операторами обработки ошибок try/catch/throw, тогда `reject` это
+   * как `throw` в JavaScript. Поэтому, когда вы «ловите» ошибку через 
+   * колбэк обещания и хотите переслать ошибку из текущего другому обещанию, то используете повторный 
+   * вызов «выкидывания» ошибки, который здесь построен через вызов `reject`.
+   * 
    *
    * <pre>
    *   promiseB = promiseA.then(function(result) {
-   *     // success: do something and resolve promiseB
-   *     //          with the old or a new result
+   *     // success: сделать что-то и принять promiseB
+   *     //          со старым или новым результатом
    *     return result;
    *   }, function(reason) {
-   *     // error: handle the error if possible and
-   *     //        resolve promiseB with newPromiseOrValue,
-   *     //        otherwise forward the rejection to promiseB
+   *     // error: обработка ошибки, если получилось обработать,
+   *     //        принимаем promiseB с newPromiseOrValue,
+   *     //        иначе передаем отказ в promiseB
    *     if (canHandle(reason)) {
-   *      // handle the error and recover
+   *      // обработка ошибок и востановление
    *      return newPromiseOrValue;
    *     }
    *     return $q.reject(reason);
    *   });
    * </pre>
    *
-   * @param {*} reason Constant, message, exception or an object representing the rejection reason.
-   * @returns {Promise} Returns a promise that was already resolved as rejected with the `reason`.
+   * @param {*} reason Константа, сообщение, исключение или любой другой объект, объясняющий причину отказа.
+   * @returns {Promise} Возвращает обещание, принятое с отказом и его причиной `reason`.
    */
   var reject = function(reason) {
     return {
@@ -311,12 +316,12 @@ function qFactory(nextTick, exceptionHandler) {
    * @name ng.$q#when
    * @methodOf ng.$q
    * @description
-   * Wraps an object that might be a value or a (3rd party) then-able promise into a $q promise.
-   * This is useful when you are dealing with an object that might or might not be a promise, or if
-   * the promise comes from a source that can't be trusted.
+   * Обертывает объект, который может стать значением или другим обещанием в $q promise. Это полезно, 
+   * когда вы имеете дело с объектом, которое может быть или не быть обещанием, или если обещание исходит 
+   * от источника, которому нет доверия.
    *
-   * @param {*} value Value or a promise
-   * @returns {Promise} Returns a promise of the passed value or promise
+   * @param {*} value Значение или обещание
+   * @returns {Promise} возвращает обещание для переданного значения или обещания
    */
   var when = function(value, callback, errback) {
     var result = defer(),
@@ -371,14 +376,12 @@ function qFactory(nextTick, exceptionHandler) {
    * @name ng.$q#all
    * @methodOf ng.$q
    * @description
-   * Combines multiple promises into a single promise that is resolved when all of the input
-   * promises are resolved.
+   * Комбинирует несколько обещаний в одно, и принимается когда все входные обещания будут выполнены.
    *
-   * @param {Array.<Promise>|Object.<Promise>} promises An array or hash of promises.
-   * @returns {Promise} Returns a single promise that will be resolved with an array/hash of values,
-   *   each value corresponding to the promise at the same index/key in the `promises` array/hash. If any of
-   *   the promises is resolved with a rejection, this resulting promise will be resolved with the
-   *   same rejection.
+   * @param {Array.<Promise>|Object.<Promise>} promises Массив обещаний.
+   * @returns {Promise} Возвращает единственное обещание, который будет принято с массивом значений, каждое 
+   * из которых соответствует обещанию с тем же индексом, что и в массиве обещаний. Если любое мз
+   * обещаний не выполняется, общее обещание так же будет считаться не выполненым.
    */
   function all(promises) {
     var deferred = defer(),

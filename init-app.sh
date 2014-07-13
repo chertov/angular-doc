@@ -1,14 +1,21 @@
 #!/usr/bin/env bash
 #
 # Script to initialize angular app
+set -e
 
 # @log startup time
 START_SERVER_TEIM=$(date +%s)
 
 rm -rf app
 
-# copy doc directory resolve symlinks
-cp -Lr build/docs app
+# copy doc directory
+if [ "$APP_ENV" = "development" ]; then
+  # save symlinks
+  ln -s build/docs app
+else
+  # resolve symlinks
+  cp -Lr build/docs app
+fi
 
 # copy javascript files
 cp build/*.js app/
@@ -31,7 +38,7 @@ cat > "main.js" << EOF
   });
   app.use(express.static(__dirname + '/'));
   // HTML5 URL Support
-  app.get('^\/?(guide|api|cookbook|misc|tutorial)(/)?*$', function(req, res) {
+  app.get('^\/?(guide|api|cookbook|misc|tutorial|ui)(/)?*$', function(req, res) {
     res.sendfile('index.html');
   });
   var port = process.env.PORT || 8000;

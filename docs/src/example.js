@@ -116,7 +116,7 @@ exports.Example.prototype.toHtmlTabs = function() {
       if (name === 'index.html') {
         wrap = ' ng-html-wrap="' + self.module + ' ' + self.deps.join(' ') + '"';
       }
-      if (name == 'scenario.js') name = 'End to end test';
+      if (name == 'scenario.js') name = 'Тест';
 
       out.push(
         '<div class="tab-pane" title="' + name + '">\n' +

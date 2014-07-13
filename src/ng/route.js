@@ -8,7 +8,7 @@
  *
  * @description
  *
- * Used for configuring routes. See {@link ng.$route $route} for an example.
+ * Используется для настройки маршрутов. См. {@link ng.$route $route} для примера.
  */
 function $RouteProvider(){
   var routes = {};
@@ -18,89 +18,87 @@ function $RouteProvider(){
    * @name ng.$routeProvider#when
    * @methodOf ng.$routeProvider
    *
-   * @param {string} path Route path (matched against `$location.path`). If `$location.path`
-   *    contains redundant trailing slash or is missing one, the route will still match and the
-   *    `$location.path` will be updated to add or drop the trailing slash to exactly match the
-   *    route definition.
+   * @param {string} path Маршрут пути (сравните с `$location.path`). Если в `$location.path` содержится 
+   *    избыточная косая черта или, напротив, отсутствует, маршрут будет по-прежнему корректным и 
+   *    `$location.path` будет обновлен, чтобы добавить или удалить косую черту и в точности соответствовать 
+   *    определению маршрута.
+   * 
+   *      * `path` может содержать участки, начинающитеся с двоеточия (`:name`). Все символы до следующего 
+   *        слэша изымаются и хранятся в `$routeParams` со значением из `name`, определяющим маршрут.
+   *      * `path` может содержать участки, начинающитеся со звездочки (`*name`). Все символы вместе со слешами
+   *        храниться в `$routeParams` со значением из `name`, определяющим маршрут.
    *
-   *      * `path` can contain named groups starting with a colon (`:name`). All characters up
-   *        to the next slash are matched and stored in `$routeParams` under the given `name`
-   *        when the route matches.
-   *      * `path` can contain named groups starting with a star (`*name`). All characters are
-   *        eagerly stored in `$routeParams` under the given `name` when the route matches.
-   *
-   *    For example, routes like `/color/:color/largecode/*largecode/edit` will match
-   *    `/color/brown/largecode/code/with/slashs/edit` and extract:
+   *    Например, такие маршруты как `/color/:color/largecode/*largecode/edit` будут заменены на
+   *    `/color/brown/largecode/code/with/slashs/edit` и извлечены:
    *
    *      * `color: brown`
    *      * `largecode: code/with/slashs`.
    *
    *
-   * @param {Object} route Mapping information to be assigned to `$route.current` on route
-   *    match.
+   * @param {Object} route Собранная информация, которая будет сопоставлена `$route.current` в сравнимом маршруте
    *
-   *    Object properties:
+   *    Свойства объекта:
    *
-   *    - `controller` – `{(string|function()=}` – Controller fn that should be associated with newly
-   *      created scope or the name of a {@link angular.Module#controller registered controller}
-   *      if passed as a string.
-   *    - `template` – `{string=|function()=}` – html template as a string or function that returns
-   *      an html template as a string which should be used by {@link ng.directive:ngView ngView} or
-   *      {@link ng.directive:ngInclude ngInclude} directives.
-   *      This property takes precedence over `templateUrl`.
+   *    - `controller` – `{(string|function()=}` – Контроллер, который должен быть связан созданной
+   *      областью видимости или именем {@link angular.Module#controller registered controller}, если
+   *      передается в виде строки.
+   *    - `controllerAs` – `{string=}` – Псевдоним контроллера. Если задан, то контроллер будет доступен
+   *      в области видимости под именем `controllerAs`.
+   *    - `template` – `{string=|function()=}` – HTML шаблон в виде строки или функция, которая возвращает
+   *      строку с HTML шаблоном, которая должна быть использована директивами {@link ng.directive:ngView ngView} 
+   *      или {@link ng.directive:ngInclude ngInclude}. Это свойство имеет приоритет над `templateUrl`.
    *
-   *      If `template` is a function, it will be called with the following parameters:
+   *      Если `template` функция, то она будет вызвана со следующими параметрами:
    *
-   *      - `{Array.<Object>}` - route parameters extracted from the current
-   *        `$location.path()` by applying the current route
+   *      - `{Array.<Object>}` - параметры маршрута, извлеченные из текущего
+   *        `$location.path()` применяющиеся в текущем маршруте.
    *
-   *    - `templateUrl` – `{string=|function()=}` – path or function that returns a path to an html
-   *      template that should be used by {@link ng.directive:ngView ngView}.
+   *    - `templateUrl` – `{string=|function()=}` – путь или функция, возвращающая путь до html-шаблона
+   *      который должен использоваться в {@link ng.directive:ngView ngView}.
    *
-   *      If `templateUrl` is a function, it will be called with the following parameters:
+   *      Если `templateUrl` функция, она будет вызвана со следующими параметрами:
    *
-   *      - `{Array.<Object>}` - route parameters extracted from the current
-   *        `$location.path()` by applying the current route
+   *      - `{Array.<Object>}` - параметры маршрута, извлеченные из текущего
+   *        `$location.path()` применяющиеся в текущем маршруте.
    *
-   *    - `resolve` - `{Object.<string, function>=}` - An optional map of dependencies which should
-   *      be injected into the controller. If any of these dependencies are promises, they will be
-   *      resolved and converted to a value before the controller is instantiated and the
-   *      `$routeChangeSuccess` event is fired. The map object is:
+   *    - `resolve` - `{Object.<string, function>=}` - Необязательный набор зависимостей, которые должны
+   *      быть внедрены в контроллер. Если любая из этих зависимостей является обещанием, они будут
+   *      приняты и преобразованы в значение перед тем как создастся экземпляр контроллера и создается и
+   *      событие `$routeChangeSuccess` будет сброшено. Объект набора представляет собой:
    *
-   *      - `key` – `{string}`: a name of a dependency to be injected into the controller.
-   *      - `factory` - `{string|function}`: If `string` then it is an alias for a service.
-   *        Otherwise if function, then it is {@link api/AUTO.$injector#invoke injected}
-   *        and the return value is treated as the dependency. If the result is a promise, it is resolved
-   *        before its value is injected into the controller.
+   *      - `key` – `{string}`: имя зависимости, которая будет внедрена в контроллер.
+   *      - `factory` - `{string|function}`: Если это строка то это псевдоним сервиса.
+   *        Если же это функция, то она {@link api/AUTO.$injector#invoke внедряется}
+   *        и возвращает значение, обрабатывающееся как зависимость. Если результат является обещанием, он принимается
+   *        до внедрения значения в контроллер.
    *
-   *    - `redirectTo` – {(string|function())=} – value to update
-   *      {@link ng.$location $location} path with and trigger route redirection.
+   *    - `redirectTo` – {(string|function())=} – значение для обновления пути
+   *      {@link ng.$location $location} с триггером перенаправления маршрута.
    *
-   *      If `redirectTo` is a function, it will be called with the following parameters:
+   *      Если `redirectTo` функция, то она будет вызвана со следующими параметрами:
    *
-   *      - `{Object.<string>}` - route parameters extracted from the current
-   *        `$location.path()` by applying the current route templateUrl.
-   *      - `{string}` - current `$location.path()`
-   *      - `{Object}` - current `$location.search()`
+   *      - `{Object.<string>}` - параметры маршрута, извлеченные из текущего
+   *        `$location.path()` с помощью применения templateUrl текущего маршрута.
+   *      - `{string}` - текущий `$location.path()`
+   *      - `{Object}` - текущий `$location.search()`
    *
-   *      The custom `redirectTo` function is expected to return a string which will be used
-   *      to update `$location.path()` and `$location.search()`.
+   *      Обычно ожидается, что функция `redirectTo` возвратит строку, которая будет использована
+   *      для обновления `$location.path()` и `$location.search()`.
    *
-   *    - `[reloadOnSearch=true]` - {boolean=} - reload route when only $location.search()
-   *    changes.
+   *    - `[reloadOnSearch=true]` - {boolean=} - перезагрузка маршрута только после изменения $location.search().
    *
-   *      If the option is set to `false` and url in the browser changes, then
-   *      `$routeUpdate` event is broadcasted on the root scope.
+   *      Если свойство установлено в `false` и url в браузере изменился, то
+   *      событие `$routeUpdate` распространяется в корневую область видимости.
    *
-   *    - `[caseInsensitiveMatch=false]` - {boolean=} - match routes without being case sensitive
+   *    - `[caseInsensitiveMatch=false]` - {boolean=} - соответствует маршрутам без учета регистра
    *
-   *      If the option is set to `true`, then the particular route can be matched without being
-   *      case sensitive
+   *      Если установлено в `true`, то маршрут может быть сопоставлен без учета регистра.
+   * 
    *
-   * @returns {Object} self
+   * @returns {Object} саму себя
    *
    * @description
-   * Adds a new route definition to the `$route` service.
+   * Добавляет новое определение маршрута в сервис `$route`.
    */
   this.when = function(path, route) {
     routes[path] = extend({reloadOnSearch: true, caseInsensitiveMatch: false}, route);
@@ -123,11 +121,11 @@ function $RouteProvider(){
    * @methodOf ng.$routeProvider
    *
    * @description
-   * Sets route definition that will be used on route change when no other route definition
-   * is matched.
+   * Устанавливает определение маршрута, которое будет использоваться при изменении маршрута, когда никаких
+   * других совпадений не найдено.
    *
-   * @param {Object} params Mapping information to be assigned to `$route.current`.
-   * @returns {Object} self
+   * @param {Object} params Составленая информация, которая будет присвоена `$route.current`.
+   * @returns {Object} саму себя
    */
   this.otherwise = function(params) {
     this.when(null, params);
@@ -158,20 +156,21 @@ function $RouteProvider(){
      * @property {Array.<Object>} routes Array of all configured routes.
      *
      * @description
-     * Is used for deep-linking URLs to controllers and views (HTML partials).
-     * It watches `$location.url()` and tries to map the path to an existing route definition.
-     *
-     * You can define routes through {@link ng.$routeProvider $routeProvider}'s API.
-     *
-     * The `$route` service is typically used in conjunction with {@link ng.directive:ngView ngView}
-     * directive and the {@link ng.$routeParams $routeParams} service.
+     * Используется для внешнего связывания URL с контроллерами и представлениями (HTML частичками). 
+     * Он отслеживает изменения `$location.url()` и пытается по карте путей найти для него существующее 
+     * определение.
+     * 
+     * Можно определить маршруты через {@link ng.$routeProvider $routeProvider} API.
+     * 
+     * Сервис `$route` обычно используется совместно с директивой {@link ng.directive:ngView ngView}
+     * и сервисом {@link ng.$routeParams $routeParams}
      *
      * @example
-       This example shows how changing the URL hash causes the `$route` to match a route against the
-       URL, and the `ngView` pulls in the partial.
-
-       Note that this example is using {@link ng.directive:script inlined templates}
-       to get it working on jsfiddle as well.
+       Этот пример показывает как в случае изменения хэша URL сервис $route находит маршрут следующего URL, 
+       и ngView получает свое представление.
+       
+       Заметьте, что этот пример использует {@link ng.directive:script строковые шаблоны}, 
+       это сделано для чтобы получить его в процессе работы.
 
      <example module="ngView">
        <file name="index.html">
@@ -269,14 +268,13 @@ function $RouteProvider(){
      * @eventOf ng.$route
      * @eventType broadcast on root scope
      * @description
-     * Broadcasted before a route change. At this  point the route services starts
-     * resolving all of the dependencies needed for the route change to occurs.
-     * Typically this involves fetching the view template as well as any dependencies
-     * defined in `resolve` route property. Once  all of the dependencies are resolved
-     * `$routeChangeSuccess` is fired.
+     * Транслируется перед изменением маршрута. В этой точке сервис route начинает разрешение всех требуемых 
+     * зависимостей, нужных для изменения маршрута. Обычно это включает извлечение шаблона представления, 
+     * так и любых других зависимостей, определенных в свойстве маршрута `resolve`. После того как все зависимости 
+     * будут разрешены, генерируется событие `$routeChangeSuccess`.
      *
-     * @param {Route} next Future route information.
-     * @param {Route} current Current route information.
+     * @param {Route} next Информация о маршруте для перехода.
+     * @param {Route} current Информация о текущем маршруте.
      */
 
     /**
@@ -285,13 +283,12 @@ function $RouteProvider(){
      * @eventOf ng.$route
      * @eventType broadcast on root scope
      * @description
-     * Broadcasted after a route dependencies are resolved.
-     * {@link ng.directive:ngView ngView} listens for the directive
-     * to instantiate the controller and render the view.
+     * Транслируется когда все зависимости маршрута будут разрешены. {@link ng.directive:ngView ngView} 
+     * слушает его для директив чтобы создать контроллер и отобразить представление.
      *
-     * @param {Object} angularEvent Synthetic event object.
-     * @param {Route} current Current route information.
-     * @param {Route|Undefined} previous Previous route information, or undefined if current is first route entered.
+     * @param {Object} angularEvent Синтезированный объект события.
+     * @param {Route} current Информация о текущем маршруте.
+     * @param {Route|Undefined} previous Информация о предыдущем маршруте, или undefined, если текущий маршрут первый.
      */
 
     /**
@@ -300,11 +297,11 @@ function $RouteProvider(){
      * @eventOf ng.$route
      * @eventType broadcast on root scope
      * @description
-     * Broadcasted if any of the resolve promises are rejected.
+     * Транслируется, если любое из принятых обещаний было отклонено.
      *
-     * @param {Route} current Current route information.
-     * @param {Route} previous Previous route information.
-     * @param {Route} rejection Rejection of the promise. Usually the error of the failed promise.
+     * @param {Route} current Информация о текущем маршруте.
+     * @param {Route} previous Информация о предыдущем маршруте.
+     * @param {Route} rejection Отвергнуто ли обещание. Обычно ошибка или испорченное обещание.
      */
 
     /**
@@ -314,8 +311,8 @@ function $RouteProvider(){
      * @eventType broadcast on root scope
      * @description
      *
-     * The `reloadOnSearch` property has been set to false, and we are reusing the same
-     * instance of the Controller.
+     * Транслируется когда свойство `reloadOnSearch` установлено в false, и мы повторно
+     * используем тот же экземпляр контроллера.
      */
 
     var forceReload = false,
@@ -328,11 +325,10 @@ function $RouteProvider(){
            * @methodOf ng.$route
            *
            * @description
-           * Causes `$route` service to reload the current route even if
-           * {@link ng.$location $location} hasn't changed.
+           * Пытается перезагрузить текущий маршрут, если {@link ng.$location $location} не изменен.
            *
-           * As a result of that, {@link ng.directive:ngView ngView}
-           * creates new scope, reinstantiates the controller.
+           * Как результат {@link ng.directive:ngView ngView} создает новую область видимости, 
+           * и пересоздается контроллер.
            */
           reload: function() {
             forceReload = true;
